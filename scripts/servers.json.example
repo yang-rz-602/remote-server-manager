@@ -1,0 +1,40 @@
+{
+  "servers": {
+    "my-server": {
+      "host": "192.168.1.100",
+      "port": 22,
+      "username": "your_username",
+      "password": "your_password",
+      "auth": "password",
+      "key_path": "",
+      "jump_host": null,
+      "conda_path": "",
+      "default_env": "",
+      "description": "My Linux server"
+    },
+    "gpu-node": {
+      "host": "192.168.1.101",
+      "port": 22,
+      "username": "your_username",
+      "password": "your_password",
+      "auth": "password",
+      "key_path": "",
+      "jump_host": null,
+      "conda_path": "/home/your_username/miniconda3",
+      "default_env": "base",
+      "description": "GPU server with conda"
+    },
+    "gpu-node-internal": {
+      "host": "10.0.0.5",
+      "port": 22,
+      "username": "your_username",
+      "password": "your_password",
+      "auth": "password",
+      "key_path": "",
+      "jump_host": "gpu-node",
+      "conda_path": "/home/your_username/miniconda3",
+      "default_env": "base",
+      "description": "GPU compute node (via jump host)"
+    }
+  }
+}

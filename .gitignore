@@ -1,0 +1,11 @@
+# Real server config (contains passwords)
+scripts/servers.json
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# OS files
+.DS_Store
+Thumbs.db
