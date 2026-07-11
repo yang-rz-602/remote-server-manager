@@ -1,16 +1,47 @@
-<svg width="1200" height="360" viewBox="0 0 1200 360" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1200" height="360" fill="#0B1220"/>
-  <rect x="72" y="58" width="1056" height="244" rx="30" fill="#F8FAFC"/>
-  <rect x="124" y="104" width="420" height="154" rx="18" fill="#111827"/>
-  <circle cx="162" cy="142" r="8" fill="#EF4444"/>
-  <circle cx="190" cy="142" r="8" fill="#F59E0B"/>
-  <circle cx="218" cy="142" r="8" fill="#10B981"/>
-  <path d="M162 190H308" stroke="#10B981" stroke-width="10" stroke-linecap="round"/>
-  <path d="M162 224H420" stroke="#38BDF8" stroke-width="10" stroke-linecap="round"/>
-  <path d="M632 122H1016" stroke="#111827" stroke-width="14" stroke-linecap="round"/>
-  <path d="M632 174H930" stroke="#2563EB" stroke-width="14" stroke-linecap="round"/>
-  <path d="M632 226H974" stroke="#F97316" stroke-width="14" stroke-linecap="round"/>
-  <path d="M526 181H608" stroke="#111827" stroke-width="12" stroke-linecap="round"/>
-  <path d="M586 154L614 181L586 208" stroke="#111827" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="125" y="292" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="700" fill="#111827">SSH automation tools for agent-driven server operations</text>
+<svg width="1280" height="420" viewBox="0 0 1280 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Remote Server Manager</title>
+  <desc id="desc">A polished banner showing a terminal connected over SSH to remote server nodes.</desc>
+
+  <rect width="1280" height="420" fill="#0F172A"/>
+  <rect x="56" y="48" width="1168" height="324" rx="28" fill="#111827" stroke="#273449" stroke-width="2"/>
+
+  <rect x="104" y="94" width="506" height="232" rx="18" fill="#0B1120" stroke="#334155" stroke-width="2"/>
+  <rect x="104" y="94" width="506" height="46" rx="18" fill="#1E293B"/>
+  <path d="M104 122H610" stroke="#334155" stroke-width="2"/>
+  <circle cx="134" cy="117" r="7" fill="#F87171"/>
+  <circle cx="160" cy="117" r="7" fill="#FBBF24"/>
+  <circle cx="186" cy="117" r="7" fill="#34D399"/>
+
+  <text x="132" y="178" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="21" fill="#93C5FD">$ ssh_exec.py gpu-node</text>
+  <text x="132" y="216" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="21" fill="#E2E8F0">status: online</text>
+  <text x="132" y="254" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="21" fill="#86EFAC">conda: 7 envs</text>
+  <text x="132" y="292" font-family="SFMono-Regular, Menlo, Consolas, monospace" font-size="21" fill="#FDE68A">logs: tail -f ready</text>
+
+  <path d="M646 210H760" stroke="#38BDF8" stroke-width="6" stroke-linecap="round"/>
+  <path d="M732 184L762 210L732 236" stroke="#38BDF8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="780" y="116" width="340" height="188" rx="22" fill="#F8FAFC"/>
+
+  <rect x="820" y="154" width="70" height="116" rx="12" fill="#1D4ED8"/>
+  <rect x="914" y="154" width="70" height="116" rx="12" fill="#059669"/>
+  <rect x="1008" y="154" width="70" height="116" rx="12" fill="#EA580C"/>
+
+  <path d="M836 180H874" stroke="#DBEAFE" stroke-width="7" stroke-linecap="round"/>
+  <path d="M836 210H874" stroke="#DBEAFE" stroke-width="7" stroke-linecap="round"/>
+  <path d="M836 240H874" stroke="#DBEAFE" stroke-width="7" stroke-linecap="round"/>
+
+  <path d="M930 180H968" stroke="#D1FAE5" stroke-width="7" stroke-linecap="round"/>
+  <path d="M930 210H968" stroke="#D1FAE5" stroke-width="7" stroke-linecap="round"/>
+  <path d="M930 240H968" stroke="#D1FAE5" stroke-width="7" stroke-linecap="round"/>
+
+  <path d="M1024 180H1062" stroke="#FFEDD5" stroke-width="7" stroke-linecap="round"/>
+  <path d="M1024 210H1062" stroke="#FFEDD5" stroke-width="7" stroke-linecap="round"/>
+  <path d="M1024 240H1062" stroke="#FFEDD5" stroke-width="7" stroke-linecap="round"/>
+
+  <circle cx="854" cy="290" r="8" fill="#22C55E"/>
+  <circle cx="948" cy="290" r="8" fill="#22C55E"/>
+  <circle cx="1042" cy="290" r="8" fill="#22C55E"/>
+
+  <text x="104" y="386" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" fill="#CBD5E1">SSH command execution · Conda management · SFTP transfer · Logs · Tunnels · Process tools</text>
+  <text x="668" y="86" font-family="Inter, Arial, sans-serif" font-size="44" font-weight="800" fill="#F8FAFC">Remote Server Manager</text>
+  <text x="670" y="118" font-family="Inter, Arial, sans-serif" font-size="18" fill="#CBD5E1">agent-ready server operations over SSH</text>
 </svg>

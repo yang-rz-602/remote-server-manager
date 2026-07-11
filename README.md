@@ -139,6 +139,7 @@ python scripts/ssh_tunnel.py my-server 127.0.0.1:8888 8888
 
 ## Documentation
 
+- [Architecture](docs/architecture.md)
 - [Configuration Guide](docs/configuration.md)
 - [Command Reference](docs/commands.md)
 - [Security Guide](docs/security.md)
@@ -150,6 +151,8 @@ python scripts/ssh_tunnel.py my-server 127.0.0.1:8888 8888
 remote-server-manager/
   SKILL.md
   README.md
+  Makefile
+  pyproject.toml
   requirements.txt
   scripts/
     servers.json.example
@@ -169,8 +172,10 @@ remote-server-manager/
 ## Validation
 
 ```bash
-python -m py_compile scripts/*.py
+make validate
 ```
+
+The validation target checks Python syntax and confirms the public example config is valid JSON.
 
 ## Safety Model
 
