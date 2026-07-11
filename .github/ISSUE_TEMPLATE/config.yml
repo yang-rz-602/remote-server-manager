@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security guide
+    url: https://github.com/yang-rz-602/remote-server-manager/blob/main/docs/security.md
+    about: Read this before sharing logs or configuration snippets.

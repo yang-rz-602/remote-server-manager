@@ -1,10 +1,25 @@
 # Real server config (contains passwords)
 scripts/servers.json
+servers.json
 
 # Python cache
 __pycache__/
 *.pyc
 *.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local logs and temporary transfer output
+*.log
+*.tmp
+downloads/
+uploads/
 
 # OS files
 .DS_Store

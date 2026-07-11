@@ -1,48 +1,39 @@
-# remote-server-manager
+# Remote Server Manager
 
-Claude Code Skill for remote server management via SSH. Uses [paramiko](https://www.paramiko.org/) (pure Python SSH) for reliable non-interactive execution.
+![Remote Server Manager](media/banner.svg)
 
-## Features
+[![License: MIT](https://img.shields.io/badge/license-MIT-111827.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.8%2B-2563EB.svg)](https://www.python.org/)
+[![SSH](https://img.shields.io/badge/transport-SSH%20%2F%20SFTP-10B981.svg)](https://www.paramiko.org/)
+[![Skill](https://img.shields.io/badge/type-agent%20skill-F97316.svg)](SKILL.md)
 
-| Script | Function |
-|--------|----------|
-| `ssh_exec.py` | Execute remote commands / health check |
-| `ssh_conda.py` | Conda environment management |
-| `ssh_script.py` | Upload and run local scripts on server |
-| `ssh_tail.py` | Real-time log monitoring (tail -f) |
-| `ssh_tunnel.py` | SSH port forwarding / tunnel |
-| `ssh_ps.py` | Process management (list/search/kill) |
-| `ssh_upload.py` | Upload files to server |
-| `ssh_download.py` | Download files from server |
-| `ssh_memory.py` | Scan server info and update config |
+Remote Server Manager is a lightweight agent skill for managing Linux servers over SSH from non-interactive coding assistants. It wraps common server operations in small Python scripts powered by [Paramiko](https://www.paramiko.org/), so agents can check status, run commands, manage conda environments, transfer files, monitor logs, and open tunnels without relying on fragile interactive shells.
 
-## Requirements
+> Security first: real server credentials belong in `scripts/servers.json`, which is ignored by Git. Only commit `scripts/servers.json.example`.
 
-- Python 3.8+
-- paramiko (`pip install paramiko`)
+## Highlights
 
-## Installation
+- SSH command execution with optional conda activation
+- Health checks for configured server aliases
+- Conda environment listing, package inspection, creation, and installs
+- SFTP uploads and downloads
+- Upload-and-run workflow for local Python or shell scripts
+- Remote log tailing
+- SSH tunnel / local port forwarding
+- Process listing, search, and kill helper
+- Server memory scan for OS, CPU, RAM, disk, uptime, and conda metadata
+- Jump host support for two-hop server access
 
-1. Copy the `remote-server-manager` folder to `~/.claude/skills/`:
-   ```bash
-   cp -r remote-server-manager ~/.claude/skills/
-   ```
+## Quick Start
 
-2. Install paramiko:
-   ```bash
-   pip install paramiko
-   ```
+```bash
+git clone https://github.com/yang-rz-602/remote-server-manager.git
+cd remote-server-manager
+python -m pip install -r requirements.txt
+cp scripts/servers.json.example scripts/servers.json
+```
 
-3. Create your server config from the example:
-   ```bash
-   cd ~/.claude/skills/remote-server-manager/scripts
-   cp servers.json.example servers.json
-   # Edit servers.json with your real server info
-   ```
-
-## Configuration
-
-Edit `scripts/servers.json`:
+Edit `scripts/servers.json` with your own server aliases:
 
 ```json
 {
@@ -63,146 +54,138 @@ Edit `scripts/servers.json`:
 }
 ```
 
-### Fields
-
-| Field | Description |
-|-------|-------------|
-| `host` | Server IP or hostname |
-| `port` | SSH port (default: 22) |
-| `username` | SSH username |
-| `password` | SSH password (when auth=password) |
-| `auth` | `"password"` or `"key"` |
-| `key_path` | Path to .pem/.ppk file (when auth=key) |
-| `jump_host` | Alias of gateway server for two-hop, or `null` for direct |
-| `conda_path` | Conda installation path (auto-detected if empty) |
-| `default_env` | Default conda environment name |
-| `description` | Human-readable description |
-
-### SSH Key Authentication
-
-```json
-{
-  "auth": "key",
-  "key_path": "/path/to/your_key.pem"
-}
-```
-
-### Jump Host (Two-Hop)
-
-```json
-{
-  "gateway": {
-    "host": "10.0.0.1",
-    "port": 22,
-    "username": "user",
-    "password": "pass",
-    "auth": "password",
-    "jump_host": null
-  },
-  "internal-node": {
-    "host": "10.0.0.5",
-    "port": 22,
-    "username": "user",
-    "password": "pass",
-    "auth": "password",
-    "jump_host": "gateway"
-  }
-}
-```
-
-## Usage
-
-All scripts are in `scripts/`. Run with `python <script>`.
-
-### Command Execution
+Run a health check:
 
 ```bash
-# Execute a command
-python ssh_exec.py my-server "uname -a && uptime"
-
-# With conda environment
-python ssh_exec.py my-server "python train.py" --conda myenv
-
-# Health check (no command = auto health check)
-python ssh_exec.py my-server
+python scripts/ssh_exec.py my-server
 ```
 
-### Conda Management
+Run a command:
 
 ```bash
-python ssh_conda.py my-server list                    # List environments
-python ssh_conda.py my-server packages myenv          # List packages in env
-python ssh_conda.py my-server create myenv 3.10       # Create env with Python 3.10
-python ssh_conda.py my-server install myenv numpy     # Install packages
-python ssh_conda.py my-server info                    # Conda info
+python scripts/ssh_exec.py my-server "hostname && uptime"
 ```
 
-### File Transfer
+## Install As A Claude Code Skill
 
 ```bash
-python ssh_upload.py my-server ./local_file.txt /remote/path/file.txt
-python ssh_download.py my-server /remote/path/file.txt ./local_file.txt
+mkdir -p ~/.claude/skills
+cp -R remote-server-manager ~/.claude/skills/
 ```
 
-### Remote Script Execution
+Then configure:
 
 ```bash
-python ssh_script.py my-server ./analyze.py arg1 arg2
-python ssh_script.py my-server ./train.sh --conda myenv
+cd ~/.claude/skills/remote-server-manager
+python -m pip install -r requirements.txt
+cp scripts/servers.json.example scripts/servers.json
 ```
 
-### Log Monitoring
+The skill is designed to activate for requests such as:
 
-```bash
-python ssh_tail.py my-server /var/log/syslog
-python ssh_tail.py my-server /var/log/app.log 100     # Last 100 lines
-```
-
-### Port Forwarding
-
-```bash
-# Map remote MySQL to localhost:3306
-python ssh_tunnel.py my-server 127.0.0.1:3306 3306
-
-# Map remote Jupyter to localhost:8888
-python ssh_tunnel.py my-server 127.0.0.1:8888 8888
-```
-
-### Process Management
-
-```bash
-python ssh_ps.py my-server                   # List all processes
-python ssh_ps.py my-server search python     # Search by name
-python ssh_ps.py my-server kill 12345        # Kill process by PID
-```
-
-### Memory Update
-
-```bash
-python ssh_memory.py my-server               # Scan and update config
-python ssh_memory.py my-server --deep        # Deep scan (with conda info)
-python ssh_memory.py --refresh-all           # Refresh all servers
-```
-
-## Claude Code Integration
-
-This skill is designed for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Once installed to `~/.claude/skills/`, Claude will automatically use it when you mention:
-
-- "连接服务器", "SSH", "远程执行"
-- "服务器状态", "健康检查"
-- "conda环境", "列出环境"
+- "连接服务器", "登录服务器", "SSH", "远程执行"
+- "服务器状态", "健康检查", "服务器信息"
+- "conda环境", "列出环境", "安装包"
 - "上传文件", "下载文件"
-- "端口转发", "隧道"
-- "查看进程", "杀掉进程"
-- Server aliases like "storage", "my-server"
+- "远程日志", "tail日志", "监控日志"
+- "端口转发", "隧道", "映射端口"
+- "查看进程", "杀掉进程", "进程管理"
 
-## Security Notes
+## Command Map
 
-- `servers.json` contains passwords and is excluded from git via `.gitignore`
-- Never commit real credentials to version control
-- Use `servers.json.example` as a template
-- Consider SSH key authentication for production use
+| Script | Purpose | Example |
+| --- | --- | --- |
+| `ssh_exec.py` | Execute commands or run health checks | `python scripts/ssh_exec.py my-server "nvidia-smi"` |
+| `ssh_conda.py` | Manage conda environments | `python scripts/ssh_conda.py my-server list` |
+| `ssh_script.py` | Upload and run a local script | `python scripts/ssh_script.py my-server ./train.py --conda ml` |
+| `ssh_upload.py` | Upload files via SFTP | `python scripts/ssh_upload.py my-server ./data.csv /tmp/data.csv` |
+| `ssh_download.py` | Download files via SFTP | `python scripts/ssh_download.py my-server /tmp/result.txt ./result.txt` |
+| `ssh_tail.py` | Follow remote logs | `python scripts/ssh_tail.py my-server /var/log/app.log 100` |
+| `ssh_tunnel.py` | Open local port forwarding | `python scripts/ssh_tunnel.py my-server 127.0.0.1:8888 8888` |
+| `ssh_ps.py` | List, search, or kill processes | `python scripts/ssh_ps.py my-server search python` |
+| `ssh_memory.py` | Refresh server metadata | `python scripts/ssh_memory.py my-server --deep` |
+
+## Common Workflows
+
+### Check server status
+
+```bash
+python scripts/ssh_exec.py my-server
+```
+
+### Run inside a conda environment
+
+```bash
+python scripts/ssh_exec.py my-server "python train.py" --conda myenv
+```
+
+### Upload and execute a script
+
+```bash
+python scripts/ssh_script.py my-server ./analyze.py --conda bio data/input.tsv
+```
+
+### Monitor a job log
+
+```bash
+python scripts/ssh_tail.py my-server /home/user/job.log 100
+```
+
+### Forward a remote notebook
+
+```bash
+python scripts/ssh_tunnel.py my-server 127.0.0.1:8888 8888
+```
+
+## Documentation
+
+- [Configuration Guide](docs/configuration.md)
+- [Command Reference](docs/commands.md)
+- [Security Guide](docs/security.md)
+- [Troubleshooting](docs/troubleshooting.md)
+
+## Repository Layout
+
+```text
+remote-server-manager/
+  SKILL.md
+  README.md
+  requirements.txt
+  scripts/
+    servers.json.example
+    ssh_exec.py
+    ssh_conda.py
+    ssh_script.py
+    ssh_upload.py
+    ssh_download.py
+    ssh_tail.py
+    ssh_tunnel.py
+    ssh_ps.py
+    ssh_memory.py
+  docs/
+  media/
+```
+
+## Validation
+
+```bash
+python -m py_compile scripts/*.py
+```
+
+## Safety Model
+
+Remote Server Manager is powerful because it can write files, install packages, kill processes, and open tunnels when asked. Use it with a conservative operating style:
+
+- Prefer read-only commands first.
+- Confirm destructive or long-running actions before running them.
+- Never commit `scripts/servers.json`.
+- Prefer SSH keys over passwords for production systems.
+- Avoid changing system directories such as `/etc`, `/usr`, `/boot`, `/var`, `/sys`, or `/proc` through automation.
+
+## Contributing
+
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for the project checklist and coding expectations.
 
 ## License
 
-MIT
+MIT License. See [LICENSE](LICENSE).

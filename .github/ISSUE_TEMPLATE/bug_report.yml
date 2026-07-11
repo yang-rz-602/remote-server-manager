@@ -1,0 +1,41 @@
+name: Bug report
+description: Report a problem with one of the SSH management scripts.
+title: "Bug: "
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: script
+    attributes:
+      label: Script
+      options:
+        - ssh_exec.py
+        - ssh_conda.py
+        - ssh_script.py
+        - ssh_upload.py
+        - ssh_download.py
+        - ssh_tail.py
+        - ssh_tunnel.py
+        - ssh_ps.py
+        - ssh_memory.py
+        - docs
+        - other
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Do not include real passwords, tokens, private hostnames, or IPs.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: "Python version, OS, Paramiko version"
